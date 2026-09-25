@@ -7,8 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:430px;margin:0 auto;min-height:100vh;position:relative;overflow-x:hidden}
+
 .screen{display:none;padding:10px;min-height:100vh}
 .screen.active{display:block}
+
+/* МЕНЮ */
 .menu-title{text-align:center;font-size:1.8em;margin:30px 0 5px}
 .menu-sub{text-align:center;color:#888;margin-bottom:25px;font-size:0.85em}
 .menu-coins{text-align:center;font-size:1.1em;margin:10px 0;color:#f5a623}
@@ -16,26 +19,82 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
 .menu-btn:active{background:#0f3460}
 .menu-btn .mb-icon{font-size:1.3em;margin-right:8px}
 .menu-btn .mb-desc{color:#888;font-size:0.8em;display:block;margin-top:2px}
+
+/* ВЕРХНЯЯ ПАНЕЛЬ */
 .topbar{display:flex;align-items:center;padding:8px;gap:8px;border-bottom:1px solid #333}
 .topbar .back{background:none;border:none;color:#eee;font-size:1.3em}
 .topbar .title{flex:1;font-weight:bold;font-size:1em}
 .topbar .coins{color:#f5a623;font-size:0.9em}
-.card-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:8px 0}
-.card-mini{background:#16213e;border:2px solid #0f3460;border-radius:10px;padding:6px;width:105px;text-align:center;font-size:0.7em;cursor:pointer;transition:all 0.2s;position:relative}
-.card-mini:active{transform:scale(0.95)}
-.card-mini.selected{border-color:#4ecdc4;box-shadow:0 0 8px #4ecdc466}
-.card-mini.locked{opacity:0.3;pointer-events:none}
-.card-mini .emo{font-size:1.8em}
-.card-mini .cname{font-weight:bold;margin:2px 0;font-size:0.95em}
-.card-mini .cstats{color:#aaa;font-size:0.9em}
-.card-mini .crarity{font-size:0.75em;margin-top:2px}
-.rarity-common .crarity{color:#aaa}
-.rarity-rare .crarity{color:#4ea8de}
-.rarity-rare{border-color:#4ea8de44}
-.rarity-epic .crarity{color:#a855f7}
-.rarity-epic{border-color:#a855f744}
-.rarity-legendary .crarity{color:#f5a623}
-.rarity-legendary{border-color:#f5a62344}
+
+/* === КАРТОЧКИ (НОВЫЙ ДИЗАЙН) === */
+.card-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:10px 0}
+
+.card-mini{
+  background:linear-gradient(145deg,#16213e,#1a1a3e);
+  border:2px solid #0f3460;border-radius:14px;
+  padding:10px 8px;width:185px;text-align:center;
+  cursor:pointer;transition:all 0.2s;position:relative;
+  box-shadow:0 4px 12px #00000044
+}
+.card-mini:active{transform:scale(0.97)}
+.card-mini.selected{border-color:#4ecdc4;box-shadow:0 0 12px #4ecdc466}
+.card-mini.locked{opacity:0.25;pointer-events:none}
+
+/* Картинка (эмодзи) */
+.card-mini .card-img{
+  font-size:4em;
+  height:80px;display:flex;align-items:center;justify-content:center;
+  background:#0f3460;border-radius:10px;margin-bottom:8px
+}
+
+/* Имя */
+.card-mini .cname{
+  font-weight:bold;font-size:1.1em;margin:4px 0;
+  text-shadow:0 1px 4px #00000088
+}
+
+/* Характеристики */
+.card-mini .stats-row{
+  display:flex;justify-content:center;gap:14px;
+  margin:6px 0;font-size:1em;font-weight:bold
+}
+.card-mini .stat-atk{color:#f5a623}
+.card-mini .stat-hp{color:#e94560}
+
+/* Пассивка */
+.card-mini .passive-block{
+  background:#0a0a1a;border-radius:8px;padding:6px 8px;
+  margin-top:6px;text-align:left
+}
+.card-mini .passive-name{
+  color:#a78bfa;font-weight:bold;font-size:0.85em;margin-bottom:2px
+}
+.card-mini .passive-desc{
+  color:#ccc;font-size:0.78em;line-height:1.3
+}
+
+/* Редкость */
+.card-mini .rarity-badge{
+  display:inline-block;margin-top:6px;
+  padding:2px 8px;border-radius:6px;font-size:0.7em;font-weight:bold
+}
+.rarity-common .rarity-badge{background:#555;color:#ccc}
+.rarity-rare .rarity-badge{background:#1a4a6e;color:#4ea8de}
+.rarity-rare{border-color:#4ea8de55}
+.rarity-epic .rarity-badge{background:#3b1a6e;color:#a855f7}
+.rarity-epic{border-color:#a855f755}
+.rarity-legendary .rarity-badge{background:#6e4a1a;color:#f5a623}
+.rarity-legendary{border-color:#f5a62355;box-shadow:0 0 15px #f5a62322}
+
+/* Количество */
+.card-mini .card-count{
+  position:absolute;top:6px;right:8px;
+  background:#e94560;color:#fff;border-radius:50%;
+  width:22px;height:22px;font-size:0.7em;font-weight:bold;
+  display:flex;align-items:center;justify-content:center
+}
+
+/* === МАГАЗИН === */
 .pack{background:#16213e;border:2px solid #0f3460;border-radius:14px;padding:16px;margin:8px 0;text-align:center;cursor:pointer}
 .pack:active{background:#0f3460}
 .pack .pack-icon{font-size:2.5em}
@@ -45,41 +104,63 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
 .pack.pack-free{border-color:#4ecdc4}
 .pack.pack-free .pack-price{color:#4ecdc4}
 .pack-disabled{opacity:0.4;pointer-events:none}
-.pack-reveal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a1aee;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;padding:20px}
+
+/* ОТКРЫТИЕ ПАКА */
+.pack-reveal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a1aee;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;padding:15px;overflow-y:auto}
 .pack-reveal.active{display:flex}
-.pack-reveal .pr-title{font-size:1.3em;margin-bottom:15px}
+.pack-reveal .pr-title{font-size:1.3em;margin-bottom:12px}
 .pack-reveal .pr-cards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.pack-reveal .pr-card{background:#16213e;border:2px solid #0f3460;border-radius:12px;padding:10px 6px;width:100px;text-align:center;animation:cardReveal 0.5s ease-out both}
+.pack-reveal .pr-card{
+  background:linear-gradient(145deg,#16213e,#1a1a3e);
+  border:2px solid #0f3460;border-radius:12px;
+  padding:10px 8px;width:120px;text-align:center;
+  animation:cardReveal 0.5s ease-out both
+}
 @keyframes cardReveal{from{transform:scale(0) rotateY(180deg);opacity:0}to{transform:scale(1) rotateY(0);opacity:1}}
 .pack-reveal .pr-card:nth-child(2){animation-delay:0.15s}
 .pack-reveal .pr-card:nth-child(3){animation-delay:0.3s}
 .pack-reveal .pr-card:nth-child(4){animation-delay:0.45s}
 .pack-reveal .pr-card:nth-child(5){animation-delay:0.6s}
 .pack-reveal .pr-card:nth-child(6){animation-delay:0.75s}
-.pack-reveal .pr-card .emo{font-size:1.8em}
-.pack-reveal .pr-card .cname{font-weight:bold;font-size:0.85em;margin:3px 0}
-.pr-close{margin-top:20px;padding:12px 40px;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:1em}
+.pack-reveal .pr-card .emo{font-size:2.5em}
+.pack-reveal .pr-card .cname{font-weight:bold;font-size:0.85em;margin:4px 0}
+.pack-reveal .pr-card .pr-stats{font-size:0.8em;margin:2px 0}
+.pack-reveal .pr-card .pr-passive{color:#a78bfa;font-size:0.7em;font-style:italic;margin-top:3px}
+.pr-close{margin-top:15px;padding:12px 40px;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:1em}
+
+/* === БОЙ (карточки побольше) === */
 .arena{padding:5px}
-.arena .label{text-align:center;font-size:0.75em;color:#888;margin:4px}
-.arena .team{display:flex;gap:5px;justify-content:center}
-.arena .vs{text-align:center;font-size:1.2em;color:#e94560;margin:6px}
-.arena .card-b{background:#16213e;border:2px solid #0f3460;border-radius:10px;padding:6px;width:105px;text-align:center;font-size:0.7em}
-.arena .card-b.dead{opacity:0.15}
-.arena .card-b .emo{font-size:1.8em}
-.arena .card-b .cname{font-weight:bold;margin:2px 0}
+.arena .label{text-align:center;font-size:0.8em;color:#888;margin:6px}
+.arena .team{display:flex;gap:6px;justify-content:center}
+.arena .vs{text-align:center;font-size:1.2em;color:#e94560;margin:8px}
+
+.arena .card-b{
+  background:linear-gradient(145deg,#16213e,#1a1a3e);
+  border:2px solid #0f3460;border-radius:12px;
+  padding:8px 5px;width:115px;text-align:center;font-size:0.75em;
+  transition:all 0.3s
+}
+.arena .card-b.dead{opacity:0.15;transform:scale(0.9)}
+.arena .card-b .emo{font-size:2.5em}
+.arena .card-b .cname{font-weight:bold;margin:3px 0;font-size:0.95em}
+.arena .card-b .b-stats{display:flex;justify-content:center;gap:8px;font-weight:bold;margin:3px 0}
 .arena .card-b .atk-v{color:#f5a623}
 .arena .card-b .hp-v{color:#e94560}
+.arena .card-b .b-passive{color:#a78bfa;font-size:0.75em;font-style:italic;margin-top:2px}
+.arena .card-b .shield-v{color:#60a5fa;font-weight:bold}
+
 .fight-btn{display:block;width:100%;padding:14px;margin:8px 0;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:1.1em;font-weight:bold}
 .fight-btn:disabled{background:#555}
-#battle-log{background:#0a0a1a;border:1px solid #333;border-radius:8px;padding:8px;height:250px;overflow-y:auto;font-size:0.72em;line-height:1.6}
+#battle-log{background:#0a0a1a;border:1px solid #333;border-radius:8px;padding:8px;height:220px;overflow-y:auto;font-size:0.73em;line-height:1.6}
 .lr{color:#555;border-top:1px solid #222;padding-top:3px;margin-top:3px}
 .lh{color:#f5a623}.lp{color:#a78bfa}.lk{color:#e94560;font-weight:bold}
 .lw{color:#4ecdc4;font-weight:bold;font-size:1.2em;text-align:center}
 .ls{color:#60a5fa}
+
 .selection-info{text-align:center;color:#888;font-size:0.85em;margin:8px 0}
 .confirm-btn{display:block;width:100%;padding:12px;margin:8px 0;background:#4ecdc4;color:#1a1a2e;border:none;border-radius:8px;font-size:1em;font-weight:bold}
 .confirm-btn:disabled{background:#555;color:#999}
-</style>
+          </style>
 </head>
 <body>
   <!-- МЕНЮ -->
@@ -230,10 +311,19 @@ function refreshCollection(){
     const cnt=gameState.collection.filter(x=>x===c.id).length;
     const own=cnt>0;
     return`<div class="card-mini rarity-${c.rarity} ${own?'':'locked'}">
-      <div class="emo">${c.emoji}</div><div class="cname">${c.name}</div>
-      <div class="cstats">⚔${c.atk} ❤${c.hp}</div>
-      <div class="cstats">✨${c.passiveName}</div>
-      <div class="crarity">${RARITY_LABEL[c.rarity]}${own?` (x${cnt})`:''}</div></div>`;
+      ${own?`<div class="card-count">x${cnt}</div>`:''}
+      <div class="card-img">${c.emoji}</div>
+      <div class="cname">${c.name}</div>
+      <div class="stats-row">
+        <span class="stat-atk">⚔ ${c.atk}</span>
+        <span class="stat-hp">❤ ${c.hp}</span>
+      </div>
+      <div class="passive-block">
+        <div class="passive-name">✨ ${c.passiveName}</div>
+        <div class="passive-desc">${c.passiveDesc}</div>
+      </div>
+      <div class="rarity-badge">${RARITY_LABEL[c.rarity]}</div>
+    </div>`;
   }).join("");
 }
 
@@ -282,9 +372,13 @@ function rollRarity(){
 function showReveal(name,cards){
   document.getElementById("pr-title").textContent=`🎁 ${name}`;
   document.getElementById("pr-cards").innerHTML=cards.map(c=>
-    `<div class="pr-card rarity-${c.rarity}"><div class="emo">${c.emoji}</div>
-    <div class="cname">${c.name}</div><div class="cstats" style="color:#aaa;font-size:0.8em">⚔${c.atk} ❤${c.hp}</div>
-    <div class="crarity">${RARITY_LABEL[c.rarity]}</div></div>`).join("");
+    `<div class="pr-card rarity-${c.rarity}">
+      <div class="emo">${c.emoji}</div>
+      <div class="cname">${c.name}</div>
+      <div class="pr-stats"><span style="color:#f5a623">⚔${c.atk}</span> <span style="color:#e94560">❤${c.hp}</span></div>
+      <div class="pr-passive">✨${c.passiveName}</div>
+      <div class="rarity-badge">${RARITY_LABEL[c.rarity]}</div>
+    </div>`).join("");
   document.getElementById("pack-reveal").classList.add("active");
 }
 function closeReveal(){document.getElementById("pack-reveal").classList.remove("active");refreshShop();}
@@ -297,9 +391,18 @@ function renderSelectionGrid(gid,sel,fn){
   document.getElementById(gid).innerHTML=owned.map(id=>{
     const c=ALL_CARDS.find(x=>x.id===id);const s=sel.includes(id);
     return`<div class="card-mini rarity-${c.rarity} ${s?'selected':''}" onclick="${fn}('${id}')">
-      <div class="emo">${c.emoji}</div><div class="cname">${c.name}</div>
-      <div class="cstats">⚔${c.atk} ❤${c.hp}</div><div class="cstats">✨${c.passiveName}</div>
-      <div class="crarity">${RARITY_LABEL[c.rarity]}</div></div>`;
+      <div class="card-img">${c.emoji}</div>
+      <div class="cname">${c.name}</div>
+      <div class="stats-row">
+        <span class="stat-atk">⚔ ${c.atk}</span>
+        <span class="stat-hp">❤ ${c.hp}</span>
+      </div>
+      <div class="passive-block">
+        <div class="passive-name">✨ ${c.passiveName}</div>
+        <div class="passive-desc">${c.passiveDesc}</div>
+      </div>
+      <div class="rarity-badge">${RARITY_LABEL[c.rarity]}</div>
+    </div>`;
   }).join("");
 }
 
@@ -337,11 +440,17 @@ function makeCard(id){
 function renderBattle(){renderBTeam("b-team-a",battleTeamA);renderBTeam("b-team-d",battleTeamD);}
 function renderBTeam(eid,team){
   document.getElementById(eid).innerHTML=team.map(c=>
-    `<div class="card-b ${c.curHp<=0?'dead':''}"><div class="emo">${c.emoji}</div>
-    <div class="cname">${c.name}</div><div class="atk-v">⚔${c.curAtk}</div>
-    <div class="hp-v">❤${Math.max(0,c.curHp)}/${c.maxHp}</div>
-    ${c.id==='chief'&&c.shieldRemaining>0?`<div style="color:#60a5fa">🛡${c.shieldRemaining}</div>`:''}</div>`).join("");
-}
+    `<div class="card-b ${c.curHp<=0?'dead':''}">
+      <div class="emo">${c.emoji}</div>
+      <div class="cname">${c.name}</div>
+      <div class="b-stats">
+        <span class="atk-v">⚔${c.curAtk}</span>
+        <span class="hp-v">❤${Math.max(0,c.curHp)}/${c.maxHp}</span>
+      </div>
+      ${c.id==='chief'&&c.shieldRemaining>0?`<div class="shield-v">🛡${c.shieldRemaining}</div>`:''}
+      <div class="b-passive">✨${c.passiveName}</div>
+    </div>`).join("");
+   }
 
 function runBattle(){
   const log=document.getElementById("battle-log");

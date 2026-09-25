@@ -32,9 +32,10 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
 .card-mini{
   background:linear-gradient(145deg,#16213e,#1a1a3e);
   border:2px solid #0f3460;border-radius:14px;
-  padding:10px 8px;width:185px;text-align:center;
+  padding:8px 5px;width:31%;text-align:center;
   cursor:pointer;transition:all 0.2s;position:relative;
-  box-shadow:0 4px 12px #00000044
+  box-shadow:0 4px 12px #00000044;
+  font-size:0.75em
 }
 .card-mini:active{transform:scale(0.97)}
 .card-mini.selected{border-color:#4ecdc4;box-shadow:0 0 12px #4ecdc466}
@@ -42,29 +43,36 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
 
 /* Картинка (эмодзи) */
 .card-mini .card-img{
-  font-size:4em;
-  height:80px;display:flex;align-items:center;justify-content:center;
-  background:#0f3460;border-radius:10px;margin-bottom:8px
+  font-size:2.8em;
+  height:55px;display:flex;align-items:center;justify-content:center;
+  background:#0f3460;border-radius:8px;margin-bottom:5px
 }
 
 /* Имя */
 .card-mini .cname{
-  font-weight:bold;font-size:1.1em;margin:4px 0;
-  text-shadow:0 1px 4px #00000088
+  font-weight:bold;font-size:0.9em;margin:3px 0;
+  text-shadow:0 1px 4px #00000088;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
 }
 
 /* Характеристики */
 .card-mini .stats-row{
-  display:flex;justify-content:center;gap:14px;
-  margin:6px 0;font-size:1em;font-weight:bold
+  display:flex;justify-content:center;gap:8px;
+  margin:4px 0;font-size:0.9em;font-weight:bold
 }
 .card-mini .stat-atk{color:#f5a623}
 .card-mini .stat-hp{color:#e94560}
 
 /* Пассивка */
 .card-mini .passive-block{
-  background:#0a0a1a;border-radius:8px;padding:6px 8px;
-  margin-top:6px;text-align:left
+  background:#0a0a1a;border-radius:6px;padding:4px 5px;
+  margin-top:4px;text-align:left
+}
+.card-mini .passive-name{
+  color:#a78bfa;font-weight:bold;font-size:0.8em;margin-bottom:1px
+}
+.card-mini .passive-desc{
+  color:#ccc;font-size:0.7em;line-height:1.2
 }
 .card-mini .passive-name{
   color:#a78bfa;font-weight:bold;font-size:0.85em;margin-bottom:2px

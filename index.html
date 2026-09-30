@@ -262,27 +262,99 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
   <script>
 // === БАЗА КАРТ ===
 const ALL_CARDS = [
-  {id:"mario",name:"Марио",emoji:"🍄",atk:3,hp:10,rarity:"common",passiveName:"Супер-гриб",passiveDesc:"HP<5: +4HP +1ATK (1 раз)",pack:"nintendo"},
-  {id:"pikachu",name:"Пикачу",emoji:"⚡",atk:5,hp:8,rarity:"common",passiveName:"Статика",passiveDesc:"50%: +2 доп. урона",pack:"nintendo"},
-  {id:"sonic",name:"Соник",emoji:"💨",atk:4,hp:7,rarity:"rare",passiveName:"Ускорение",passiveDesc:"Всегда бьёт первым",pack:"classic"},
-  {id:"steve",name:"Стив",emoji:"⛏️",atk:3,hp:11,rarity:"common",passiveName:"Крафт доспехов",passiveDesc:"Атака: +1 макс HP",pack:"classic"},
-  {id:"lara",name:"Лара Крофт",emoji:"🔫",atk:4,hp:9,rarity:"rare",passiveName:"Сокровища",passiveDesc:"Убийство: союзник +2HP",pack:"classic"},
-  {id:"knight",name:"Рыцарь",emoji:"🖤",atk:3,hp:9,rarity:"rare",passiveName:"Фокус Душ",passiveDesc:"Нанёс урон: +1HP",pack:"rpg"},
-  {id:"geralt",name:"Геральт",emoji:"🐺",atk:4,hp:12,rarity:"epic",passiveName:"Эликсиры",passiveDesc:"Враг сильнее: +2ATK",pack:"rpg"},
-  {id:"chief",name:"Мастер Чиф",emoji:"🤖",atk:3,hp:14,rarity:"epic",passiveName:"Энергощит",passiveDesc:"Блок первых 3 урона",pack:"shooter"},
-  {id:"doom",name:"Палач Рока",emoji:"👹",atk:3,hp:13,rarity:"epic",passiveName:"Добивание",passiveDesc:"Враг ≤3HP: убийство",pack:"shooter"},
-  {id:"kratos",name:"Кратос",emoji:"🪓",atk:2,hp:15,rarity:"legendary",passiveName:"Ярость спартанца",passiveDesc:"Получил урон: +1ATK",pack:"rpg"}
+  // === NINTENDO ===
+  {id:"mario",name:"Марио",emoji:"🍄",atk:3,hp:10,rarity:"common",
+    passiveName:"Супер-гриб",passiveDesc:"HP<5: +4HP +1ATK (1 раз)",pack:"nintendo"},
+  {id:"pikachu",name:"Пикачу",emoji:"⚡",atk:5,hp:8,rarity:"common",
+    passiveName:"Статика",passiveDesc:"50%: +2 доп. урона",pack:"nintendo"},
+  {id:"link",name:"Линк",emoji:"🗡️",atk:4,hp:11,rarity:"rare",
+    passiveName:"Первый удар",passiveDesc:"Первая атака наносит x2 урона",pack:"nintendo"},
+  {id:"fox",name:"Фокс",emoji:"🦊",atk:3,hp:8,rarity:"common",
+    passiveName:"Уклонение",passiveDesc:"Уклоняется от первой атаки",pack:"nintendo"},
+  {id:"zelda",name:"Зельда",emoji:"👑",atk:3,hp:10,rarity:"rare",
+    passiveName:"Мудрость",passiveDesc:"Каждый 3-й раунд хилит союзника +3HP",pack:"nintendo"},
+
+  // === CLASSIC ===
+  {id:"sonic",name:"Соник",emoji:"💨",atk:4,hp:7,rarity:"rare",
+    passiveName:"Ускорение",passiveDesc:"Всегда бьёт первым",pack:"classic"},
+  {id:"steve",name:"Стив",emoji:"⛏️",atk:3,hp:11,rarity:"common",
+    passiveName:"Крафт доспехов",passiveDesc:"Атака: +1 макс HP",pack:"classic"},
+  {id:"megaman",name:"Мегамен",emoji:"🔵",atk:4,hp:9,rarity:"rare",
+    passiveName:"Копирование",passiveDesc:"Копирует ATK убитого врага",pack:"classic"},
+  {id:"pacman",name:"Пакмен",emoji:"🟡",atk:2,hp:12,rarity:"common",
+    passiveName:"Поглощение",passiveDesc:"Каждый раунд: +1HP",pack:"classic"},
+  {id:"frogger",name:"Фроггер",emoji:"🐸",atk:2,hp:7,rarity:"common",
+    passiveName:"Прыжок",passiveDesc:"40% уклонение от атак",pack:"classic"},
+
+  // === SHOOTER ===
+  {id:"lara",name:"Лара Крофт",emoji:"🔫",atk:4,hp:9,rarity:"rare",
+    passiveName:"Сокровища",passiveDesc:"Убийство: союзник +2HP",pack:"shooter"},
+  {id:"chief",name:"Мастер Чиф",emoji:"🤖",atk:3,hp:14,rarity:"epic",
+    passiveName:"Энергощит",passiveDesc:"Блок первых 3 урона",pack:"shooter"},
+  {id:"doom",name:"Палач Рока",emoji:"👹",atk:3,hp:13,rarity:"epic",
+    passiveName:"Добивание",passiveDesc:"Враг ≤3HP: мгновенное убийство",pack:"shooter"},
+  {id:"agent47",name:"Агент 47",emoji:"🎯",atk:5,hp:7,rarity:"rare",
+    passiveName:"Контракт",passiveDesc:"Бьёт самого слабого врага",pack:"shooter"},
+  {id:"price",name:"Кпт. Прайс",emoji:"🛡️",atk:3,hp:12,rarity:"rare",
+    passiveName:"Прикрытие",passiveDesc:"Союзники получают -1 урона",pack:"shooter"},
+
+  // === RPG ===
+  {id:"geralt",name:"Геральт",emoji:"🐺",atk:4,hp:12,rarity:"epic",
+    passiveName:"Эликсиры",passiveDesc:"Враг сильнее: +2ATK при атаке",pack:"rpg"},
+  {id:"knight",name:"Рыцарь",emoji:"🖤",atk:3,hp:9,rarity:"rare",
+    passiveName:"Фокус Душ",passiveDesc:"Нанёс урон: +1HP в след. раунде",pack:"rpg"},
+  {id:"kratos",name:"Кратос",emoji:"🪓",atk:2,hp:15,rarity:"legendary",
+    passiveName:"Ярость спартанца",passiveDesc:"Получил урон: +1ATK навсегда",pack:"rpg"},
+  {id:"dovahkiin",name:"Довакин",emoji:"🧙",atk:3,hp:11,rarity:"epic",
+    passiveName:"Крик",passiveDesc:"Каждые 2 раунда: 3 урона всем врагам",pack:"rpg"},
+  {id:"sekiro",name:"Сёнгоку",emoji:"⚔️",atk:5,hp:8,rarity:"rare",
+    passiveName:"Парирование",passiveDesc:"При получении удара: 2 ответного урона",pack:"rpg"},
+
+  // === OPEN WORLD ===
+  {id:"cj",name:"CJ",emoji:"🏎️",atk:3,hp:10,rarity:"common",
+    passiveName:"Район",passiveDesc:"Каждый раунд: случайно +2ATK или +2HP",pack:"openworld"},
+  {id:"arthur",name:"Артур Морган",emoji:"🤠",atk:4,hp:11,rarity:"epic",
+    passiveName:"Dead Eye",passiveDesc:"Первый удар — крит x2",pack:"openworld"},
+  {id:"aloy",name:"Элой",emoji:"🧗",atk:4,hp:10,rarity:"rare",
+    passiveName:"Охотница",passiveDesc:"Бьёт врага с наибольшим HP",pack:"openworld"},
+  {id:"edward",name:"Эдвард Кенуэй",emoji:"⛵",atk:3,hp:9,rarity:"rare",
+    passiveName:"Грабёж",passiveDesc:"При атаке: ворует +1ATK у врага",pack:"openworld"},
+  {id:"rico",name:"Рико Родригез",emoji:"🌍",atk:3,hp:8,rarity:"common",
+    passiveName:"Взрыв",passiveDesc:"При смерти: 4 урона всем врагам",pack:"openworld"},
+
+  // === ROGUELIKE ===
+  {id:"zagreus",name:"Загрей",emoji:"🏴‍☠️",atk:4,hp:6,rarity:"rare",
+    passiveName:"Неумирающий",passiveDesc:"При смерти: возрождается 1 раз с 3HP",pack:"roguelike"},
+  {id:"joker",name:"Джокер",emoji:"🃏",atk:3,hp:9,rarity:"epic",
+    passiveName:"Персона",passiveDesc:"Всегда бьёт самого сильного врага",pack:"roguelike"},
+  {id:"isaac",name:"Айзек",emoji:"🗝️",atk:2,hp:8,rarity:"common",
+    passiveName:"Случайный предмет",passiveDesc:"Каждый раунд: +2ATK или +2HP или 3 урона врагу",pack:"roguelike"},
+  {id:"skeleton",name:"Скелет",emoji:"☠️",atk:3,hp:7,rarity:"common",
+    passiveName:"Проклятие",passiveDesc:"При смерти: убийца получает -2ATK",pack:"roguelike"},
+  {id:"lucky",name:"Удачник",emoji:"🎲",atk:2,hp:9,rarity:"rare",
+    passiveName:"Удача",passiveDesc:"25% шанс полностью заблокировать атаку",pack:"roguelike"}
 ];
 
 const RARITY_LABEL={common:"Обычная",rare:"Редкая",epic:"Эпическая",legendary:"Легендарная"};
 const RARITY_WEIGHTS={common:60,rare:25,epic:12,legendary:3};
 
 const PACKS = [
-  {id:"daily",name:"Ежедневный пак",icon:"🎁",cards:3,price:0,desc:"3 карты бесплатно раз в день",filter:null,daily:true},
-  {id:"standard",name:"Стандартный пак",icon:"📦",cards:6,price:100,desc:"6 карт из всех серий",filter:null},
-  {id:"nintendo",name:"Пак Nintendo",icon:"🎮",cards:6,price:120,desc:"Повышен шанс: Марио, Пикачу",filter:"nintendo"},
-  {id:"rpg",name:"Пак RPG",icon:"⚔️",cards:6,price:120,desc:"Повышен шанс: Геральт, Кратос, Рыцарь",filter:"rpg"},
-  {id:"shooter",name:"Пак Стрелки",icon:"🔫",cards:6,price:120,desc:"Повышен шанс: Мастер Чиф, Палач Рока",filter:"shooter"}
+  {id:"daily",name:"Ежедневный пак",icon:"🎁",cards:3,price:0,
+    desc:"3 карты бесплатно раз в день",filter:null,daily:true},
+  {id:"standard",name:"Стандартный пак",icon:"📦",cards:6,price:100,
+    desc:"6 карт из всех серий",filter:null},
+  {id:"nintendo",name:"Пак Nintendo",icon:"🎮",cards:6,price:120,
+    desc:"Марио, Пикачу, Линк, Фокс, Зельда",filter:"nintendo"},
+  {id:"classic",name:"Пак Классика",icon:"👾",cards:6,price:120,
+    desc:"Соник, Стив, Мегамен, Пакмен, Фроггер",filter:"classic"},
+  {id:"shooter",name:"Пак Стрелки",icon:"🔫",cards:6,price:120,
+    desc:"Чиф, Палач, Лара, Агент 47, Прайс",filter:"shooter"},
+  {id:"rpg",name:"Пак RPG",icon:"⚔️",cards:6,price:120,
+    desc:"Геральт, Кратос, Рыцарь, Довакин, Сёнгоку",filter:"rpg"},
+  {id:"openworld",name:"Пак Открытый мир",icon:"🌍",cards:6,price:120,
+    desc:"CJ, Артур Морган, Элой, Эдвард, Рико",filter:"openworld"},
+  {id:"roguelike",name:"Пак Рогалик",icon:"🎲",cards:6,price:120,
+    desc:"Загрей, Джокер, Айзек, Скелет, Удачник",filter:"roguelike"}
 ];
 
 // === СОХРАНЕНИЕ ===
@@ -309,17 +381,28 @@ function showScreen(id){
 function refreshMenu(){
   document.getElementById("menu-coins").textContent=`🪙 ${gameState.coins}`;
   const u=[...new Set(gameState.collection)].length;
-  document.getElementById("coll-count").textContent=`Карт: ${u} / ${ALL_CARDS.length} | Побед: ${gameState.wins}`;
+  document.getElementById("coll-count").textContent=
+    `Уникальных карт: ${u} / ${ALL_CARDS.length} | Побед: ${gameState.wins}`;
 }
 
 // === КОЛЛЕКЦИЯ ===
 function refreshCollection(){
+function refreshCollection(){
   document.getElementById("coll-coins").textContent=`🪙 ${gameState.coins}`;
-  document.getElementById("collection-grid").innerHTML=ALL_CARDS.map(c=>{
-    const cnt=gameState.collection.filter(x=>x===c.id).length;
-    const own=cnt>0;
-    return`<div class="card-mini rarity-${c.rarity} ${own?'':'locked'}">
-      ${own?`<div class="card-count">x${cnt}</div>`:''}
+  const owned=[...new Set(gameState.collection)];
+  if(owned.length===0){
+    document.getElementById("collection-grid").innerHTML=
+      `<div style="text-align:center;color:#888;padding:40px">
+        У тебя пока нет карт.<br>Открой пак в магазине! 🎁
+      </div>`;
+    return;
+  }
+  document.getElementById("collection-grid").innerHTML=owned.map(id=>{
+    const c=ALL_CARDS.find(x=>x.id===id);
+    if(!c)return'';
+    const cnt=gameState.collection.filter(x=>x===id).length;
+    return`<div class="card-mini rarity-${c.rarity}">
+      ${cnt>1?`<div class="card-count">x${cnt}</div>`:''}
       <div class="card-img">${c.emoji}</div>
       <div class="cname">${c.name}</div>
       <div class="stats-row">
@@ -442,7 +525,10 @@ function generateBotDefense(){
 
 function makeCard(id){
   const b=ALL_CARDS.find(c=>c.id===id);
-  return{...b,curHp:b.hp,maxHp:b.hp,curAtk:b.atk,mushroomUsed:false,shieldRemaining:3,dealtDmgLastRound:false,side:""};
+  return{...b,curHp:b.hp,maxHp:b.hp,curAtk:b.atk,
+    mushroomUsed:false,shieldRemaining:3,
+    dealtDmgLastRound:false,dodgeUsed:false,
+    firstAttack:true,revived:false,side:""};
 }
 
 function renderBattle(){renderBTeam("b-team-a",battleTeamA);renderBTeam("b-team-d",battleTeamD);}
@@ -489,70 +575,190 @@ function runBattle(){
     }
     queue.sort((a,b)=>(b.card.id==="sonic"?1:0)-(a.card.id==="sonic"?1:0));
 
-    for(const turn of queue){
+        for(const turn of queue){
       const card=turn.card;
       if(card.curHp<=0)continue;
-      const target=turn.enemies.find(c=>c.curHp>0);
+      let target;
+
+      // Выбор цели
+      if(card.id==="agent47"){
+        // Бьёт самого слабого
+        target=turn.enemies.filter(c=>c.curHp>0).sort((a,b)=>a.curHp-b.curHp)[0];
+      } else if(card.id==="aloy"){
+        // Бьёт самого толстого
+        target=turn.enemies.filter(c=>c.curHp>0).sort((a,b)=>b.curHp-a.curHp)[0];
+      } else if(card.id==="joker"){
+        // Бьёт самого сильного
+        target=turn.enemies.filter(c=>c.curHp>0).sort((a,b)=>b.curAtk-a.curAtk)[0];
+      } else {
+        target=turn.enemies.find(c=>c.curHp>0);
+      }
       if(!target)continue;
+
       const tag=turn.allies===battleTeamA?"🔵":"🔴";
 
+      // Пакмен: хил каждый раунд
+      if(card.id==="pacman"&&card.curHp>0){
+        card.curHp=Math.min(card.maxHp,card.curHp+1);
+        add(`${tag} 🟡 ${card.name}: Поглощение +1HP (${card.curHp})`,"lp");
+      }
+
+      // CJ: случайный бонус
+      if(card.id==="cj"&&card.curHp>0){
+        if(Math.random()<0.5){card.curAtk+=2;add(`${tag} 🏎️ CJ: Район! +2ATK`,"lp");}
+        else{card.curHp+=2;card.maxHp+=2;add(`${tag} 🏎️ CJ: Район! +2HP`,"lp");}
+      }
+
+      // Айзек: случайный эффект
+      if(card.id==="isaac"&&card.curHp>0){
+        const roll=Math.floor(Math.random()*3);
+        if(roll===0){card.curAtk+=2;add(`${tag} 🗝️ Айзек: предмет! +2ATK`,"lp");}
+        else if(roll===1){card.curHp+=2;card.maxHp+=2;add(`${tag} 🗝️ Айзек: предмет! +2HP`,"lp");}
+        else{target.curHp-=3;add(`${tag} 🗝️ Айзек: предмет! 3 урона ${target.name}`,"lp");}
+      }
+
+      // Зельда: каждый 3-й раунд хилит союзника
+      if(card.id==="zelda"&&round%3===0){
+        const ally=turn.allies.filter(c=>c.curHp>0&&c!==card).sort((a,b)=>a.curHp-b.curHp)[0];
+        if(ally){ally.curHp=Math.min(ally.maxHp,ally.curHp+3);
+          add(`${tag} 👑 Зельда: Мудрость! ${ally.name} +3HP`,"lp");}
+      }
+
+      // Довакин: каждые 2 раунда урон всем
+      if(card.id==="dovahkiin"&&round%2===0){
+        turn.enemies.filter(c=>c.curHp>0).forEach(e=>{
+          e.curHp-=3;
+          if(e.curHp<=0)add(`💀 ${e.name} повержен Криком!`,"lk");
+        });
+        add(`${tag} 🧙 Довакин: Крик! 3 урона всем врагам`,"lp");
+        renderBattle();
+        if(checkEnd(add,loop,btn))return;
+      }
+
+      // Палач Рока: добивание
       if(card.id==="doom"&&target.curHp<=3&&target.curHp>0){
         target.curHp=0;
         add(`${tag} ${card.emoji} ${card.name} → 💀 ${target.name} ДОБИВАНИЕ!`,"lk");
         card.dealtDmgLastRound=true;
-        onKill(card,target,turn.allies,add);
+        onKill(card,target,turn.allies,turn.enemies,add);
         renderBattle();
         if(checkEnd(add,loop,btn))return;
         continue;
       }
 
       let dmg=card.curAtk;
+
+      // Геральт: эликсиры
       if(card.id==="geralt"&&target.curAtk>card.curAtk){dmg+=2;add(`${tag} 🐺 Эликсиры! +2ATK`,"lp");}
+      // Линк: первый удар x2
+      if(card.id==="link"&&card.firstAttack){dmg*=2;card.firstAttack=false;add(`${tag} 🗡️ Линк: Первый удар! x2 урона`,"lp");}
+      // Артур Морган: первый удар крит
+      if(card.id==="arthur"&&card.firstAttack){dmg*=2;card.firstAttack=false;add(`${tag} 🤠 Dead Eye! x2 урона`,"lp");}
+      // Эдвард: ворует ATK
+      if(card.id==="edward"&&target.curAtk>1){target.curAtk-=1;card.curAtk+=1;add(`${tag} ⛵ Грабёж! +1ATK, ${target.name} -1ATK`,"lp");}
 
       add(`${tag} ${card.emoji} ${card.name} → ${target.emoji} ${target.name} (-${dmg})`,"lh");
-      applyDamage(target,dmg,add);
+      const result=applyDamage(target,dmg,add);
       card.dealtDmgLastRound=true;
 
+      // Секиро: ответный урон
+      if(result===-2){card.curHp-=2;add(`${tag} ${card.name} получил 2 ответного урона!`,"lh");
+        if(card.curHp<=0)add(`💀 ${card.name} повержен ответкой!`,"lk");
+      }
+
+      // Пикачу: статика
       if(card.id==="pikachu"&&target.curHp>0&&Math.random()<0.5){target.curHp-=2;add(`${tag} ⚡ Статика! +2 урона`,"lp");}
+      // Стив: крафт
       if(card.id==="steve"){card.maxHp+=1;card.curHp+=1;add(`${tag} ⛏ Крафт! HP→${card.curHp}/${card.maxHp}`,"lp");}
 
       if(target.curHp<=0){
         add(`💀 ${target.emoji} ${target.name} повержен!`,"lk");
-        onKill(card,target,turn.allies,add);
+        onKill(card,target,turn.allies,turn.enemies,add);
       }
       renderBattle();
       if(checkEnd(add,loop,btn))return;
-    }
-    round++;
-    if(round>30){
-      clearInterval(loop);btn.disabled=false;
-      const hpA=battleTeamA.reduce((s,c)=>s+Math.max(0,c.curHp),0);
-      const hpD=battleTeamD.reduce((s,c)=>s+Math.max(0,c.curHp),0);
-      if(hpA>hpD){add("<br>🏆 ПОБЕДА! (по HP)","lw");onWin();}
-      else if(hpD>hpA){add("<br>💔 ПОРАЖЕНИЕ","lw");onLose();}
-      else add("<br>🤝 НИЧЬЯ","lw");
-    }
-  },1000);
-}
+        }
 
 function applyDamage(target,dmg,add){
+  // Мастер Чиф: щит
   if(target.id==="chief"&&target.shieldRemaining>0){
     const bl=Math.min(dmg,target.shieldRemaining);target.shieldRemaining-=bl;dmg-=bl;
     if(bl>0)add(`🛡 ${target.name}: щит -${bl} (ост. ${target.shieldRemaining})`,"ls");
-    if(dmg<=0)return;
+    if(dmg<=0)return 0;
   }
+  // Фокс: уклонение от первой атаки
+  if(target.id==="fox"&&!target.dodgeUsed){
+    target.dodgeUsed=true;
+    add(`🦊 ${target.name}: Уклонение! Атака промахнулась`,"lp");
+    return 0;
+  }
+  // Удачник: 25% блок
+  if(target.id==="lucky"&&Math.random()<0.25){
+    add(`🎲 ${target.name}: Удача! Атака заблокирована`,"lp");
+    return 0;
+  }
+  // Фроггер: 40% уклонение
+  if(target.id==="frogger"&&Math.random()<0.4){
+    add(`🐸 ${target.name}: Прыжок! Уклонился`,"lp");
+    return 0;
+  }
+  // Прайс: союзники получают -1 урона
+  if(target.id!=="price"){
+    const team=target.side==="a"?battleTeamA:battleTeamD;
+    const priceAlive=team.find(c=>c.id==="price"&&c.curHp>0);
+    if(priceAlive&&dmg>1){dmg-=1;add(`🛡️ Прайс: Прикрытие! -1 урона`,"lp");}
+  }
+
   target.curHp-=dmg;
-  if(target.id==="kratos"&&dmg>0&&target.curHp>0){target.curAtk+=1;add(`🪓 ${target.name}: Ярость! ATK→${target.curAtk}`,"lp");}
+
+  // Кратос: ярость
+  if(target.id==="kratos"&&dmg>0&&target.curHp>0){
+    target.curAtk+=1;add(`🪓 ${target.name}: Ярость! ATK→${target.curAtk}`,"lp");
+  }
+  // Сёнгоку: парирование
+  if(target.id==="sekiro"&&dmg>0&&target.curHp>0){
+    add(`⚔️ ${target.name}: Парирование! 2 ответного урона`,"lp");
+    return -2; // сигнал вернуть урон атакующему
+  }
+  // Марио: гриб
   if(target.id==="mario"&&!target.mushroomUsed&&target.curHp>0&&target.curHp<5){
     target.mushroomUsed=true;target.curHp+=4;target.curAtk+=1;
     add(`🍄 ${target.name}: Супер-гриб! +4HP ATK→${target.curAtk}`,"lp");
   }
-}
+  return dmg;
+      }
 
-function onKill(killer,victim,allies,add){
-  if(killer.id==="lara"){const nx=allies.find(c=>c.curHp>0&&c!==killer);
-    if(nx){nx.maxHp+=2;nx.curHp+=2;add(`🔫 Сокровища! ${nx.name} +2HP`,"lp");}}
-}
+function onKill(card,target,turn.allies,turn.enemies,add){
+  // Лара: сокровища
+  if(killer.id==="lara"){
+    const nx=allies.find(c=>c.curHp>0&&c!==killer);
+    if(nx){nx.maxHp+=2;nx.curHp+=2;add(`🔫 Сокровища! ${nx.name} +2HP`,"lp");}
+  }
+  // Мегамен: копирует ATK
+  if(killer.id==="megaman"){
+    killer.curAtk=victim.curAtk;
+    add(`🔵 Мегамен: Копирование! ATK→${killer.curAtk}`,"lp");
+  }
+  // Загрей: воскрешение
+  if(victim.id==="zagreus"&&!victim.revived){
+    victim.revived=true;victim.curHp=3;
+    add(`🏴‍☠️ Загрей: Неумирающий! Возрождён с 3HP`,"lp");
+  }
+  // Скелет: проклятие убийцы
+  if(victim.id==="skeleton"){
+    killer.curAtk=Math.max(0,killer.curAtk-2);
+    add(`☠️ Скелет: Проклятие! ${killer.name} ATK→${killer.curAtk}`,"lp");
+  }
+  // Рико: взрыв при смерти
+  if(victim.id==="rico"){
+    const foes=victim.side==="a"?battleTeamD:battleTeamA;
+    foes.filter(c=>c.curHp>0).forEach(e=>{
+      e.curHp-=4;
+      if(e.curHp<=0)add(`💀 ${e.name} погиб от взрыва!`,"lk");
+    });
+    add(`🌍 Рико: Взрыв! 4 урона всем врагам`,"lp");
+  }
+    }
 
 function checkEnd(add,loop,btn){
   const aA=battleTeamA.filter(c=>c.curHp>0).length;

@@ -51,6 +51,8 @@ body{background:#1a1a2e;color:#eee;font-family:'Segoe UI',sans-serif;max-width:4
 .pack.pack-free{border-color:#4ecdc4}
 .pack.pack-free .pack-price{color:#4ecdc4}
 .pack-disabled{opacity:0.4;pointer-events:none}
+  .pack-rotating{border-color:#f5a623;background:linear-gradient(145deg,#1a1a2e,#2a1f10)}
+.pack-badge{display:inline-block;background:#f5a623;color:#1a1a2e;padding:2px 10px;border-radius:6px;font-size:0.7em;font-weight:bold;margin-bottom:6px}
 .pack-reveal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a1aee;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;padding:15px;overflow-y:auto}
 .pack-reveal.active{display:flex}
 .pack-reveal .pr-title{font-size:1.3em;margin-bottom:12px}
@@ -284,18 +286,44 @@ function refreshCollection(){
   }).join("");
 }
 
+  function getRotatingPack(){
+  const themePacks=PACKS.filter(p=>!p.daily&&p.id!=="standard");
+  const today=new Date().toISOString().slice(0,10);
+  let seed=0;
+  for(let i=0;i<today.length;i++)seed+=today.charCodeAt(i)*(i+1);
+  return themePacks[seed%themePacks.length];
+  }
 function refreshShop(){
   document.getElementById("shop-coins").textContent=`🪙 ${gameState.coins}`;
   const today=new Date().toISOString().slice(0,10);
   const du=gameState.lastDaily===today;
-  document.getElementById("shop-packs").innerHTML=PACKS.map(p=>{
+  const rotPack=getRotatingPack();
+
+  const shopPacks=[
+    PACKS.find(p=>p.id==="daily"),
+    PACKS.find(p=>p.id==="standard"),
+    rotPack
+  ];
+
+  const tomorrow=new Date();
+  tomorrow.setDate(tomorrow.getDate()+1);
+  tomorrow.setHours(0,0,0,0);
+  const diff=tomorrow-new Date();
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+
+  document.getElementById("shop-packs").innerHTML=shopPacks.map((p,i)=>{
     const dis=p.daily?du:gameState.coins<p.price;
-    return`<div class="pack ${p.daily?'pack-free':''} ${dis?'pack-disabled':''}" onclick="buyPack('${p.id}')">
-      <div class="pack-icon">${p.icon}</div><div class="pack-name">${p.name}</div>
+    const isRot=i===2;
+    return`<div class="pack ${p.daily?'pack-free':''} ${isRot?'pack-rotating':''} ${dis?'pack-disabled':''}" onclick="buyPack('${p.id}')">
+      ${isRot?'<div class="pack-badge">⭐ ПАК ДНЯ</div>':''}
+      <div class="pack-icon">${p.icon}</div>
+      <div class="pack-name">${p.name}</div>
       <div class="pack-info">${p.desc}</div>
-      <div class="pack-price">${p.daily?(du?'✅ Получен сегодня':'🆓 Бесплатно!'):`🪙 ${p.price}`}</div></div>`;
-  }).join("");
-}
+      <div class="pack-price">${p.daily?(du?'✅ Получен сегодня':'🆓 Бесплатно!'):`🪙 ${p.price}`}</div>
+    </div>`;
+  }).join("")+`<div style="text-align:center;color:#666;font-size:0.8em;margin-top:12px">⏰ Пак дня сменится через ${h}ч ${m}м</div>`;
+    }
 
 function buyPack(pid){
   const p=PACKS.find(x=>x.id===pid);if(!p)return;

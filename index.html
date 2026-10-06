@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Авто Батлер 3x3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen active" id="screen-menu">
+  <div class="menu-title">⚔️ AutoBattler</div>
+  <div class="menu-sub">Коллекционный карточный автобатлер</div>
+  <div class="menu-coins" id="menu-coins">🪙 0</div>
+  <button class="menu-btn" onclick="showScreen('screen-battle-pick')">
+    <span class="mb-icon">⚔️</span> Вступить в бой
+    <span class="mb-desc">Выбери 3 карты и атакуй</span>
+  </button>
+  <button class="menu-btn" onclick="showScreen('screen-defense')">
+    <span class="mb-icon">🛡️</span> Команда защиты
+    <span class="mb-desc">Настрой защиту от атак</span>
+  </button>
+  <button class="menu-btn" onclick="showScreen('screen-collection')">
+    <span class="mb-icon">📖</span> Коллекция
+    <span class="mb-desc" id="coll-count">Карт: 0 / 41</span>
+  </button>
+  <button class="menu-btn" onclick="showScreen('screen-shop')">
+    <span class="mb-icon">🎁</span> Магазин паков
+    <span class="mb-desc">Открывай паки, собирай карты</span>
+  </button>
+  <button class="menu-btn" onclick="resetGame()" style="border-color:#555;margin-top:20px;padding:8px">
+    <span class="mb-icon">🔄</span> Сбросить весь прогресс
+  </button>
+</div>
+
+<div class="screen" id="screen-collection">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('screen-menu')">←</button>
+    <div class="title">📖 Коллекция</div>
+    <div class="coins" id="coll-coins">🪙 0</div>
+  </div>
+  <div class="card-grid" id="collection-grid"></div>
+</div>
+
+<div class="screen" id="screen-shop">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('screen-menu')">←</button>
+    <div class="title">🎁 Магазин</div>
+    <div class="coins" id="shop-coins">🪙 0</div>
+  </div>
+  <div id="shop-packs"></div>
+</div>
+
+<div class="pack-reveal" id="pack-reveal">
+  <div class="pr-title" id="pr-title">🎁 Открытие пака!</div>
+  <div class="pr-cards" id="pr-cards"></div>
+  <button class="pr-close" onclick="closeReveal()">Забрать!</button>
+</div>
+
+<div class="screen" id="screen-defense">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('screen-menu')">←</button>
+    <div class="title">🛡️ Команда защиты</div>
+  </div>
+  <div class="selection-info">Выбери 3 карты для защиты</div>
+  <div class="card-grid" id="defense-grid"></div>
+  <button class="confirm-btn" id="def-confirm" disabled onclick="saveDefense()">Сохранить защиту</button>
+</div>
+
+<div class="screen" id="screen-battle-pick">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('screen-menu')">←</button>
+    <div class="title">⚔️ Выбери команду</div>
+  </div>
+  <div class="selection-info">Выбери 3 карты для атаки</div>
+  <div class="card-grid" id="attack-grid"></div>
+  <button class="confirm-btn" id="atk-confirm" disabled onclick="startBattleScreen()">В бой!</button>
+</div>
+
+<div class="screen" id="screen-battle">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('screen-menu')">←</button>
+    <div class="title">⚔️ Арена</div>
+  </div>
+  <div class="arena">
+    <div class="label">— ТВОЯ АТАКА —</div>
+    <div class="team" id="b-team-a"></div>
+    <div class="vs">⚔️ VS ⚔️</div>
+    <div class="label">— ЗАЩИТА ВРАГА —</div>
+    <div class="team" id="b-team-d"></div>
+  </div>
+  <button class="fight-btn" id="fight-btn" onclick="runBattle()">⚔️ НАЧАТЬ БОЙ</button>
+  <div id="battle-log"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+                                                                </html>

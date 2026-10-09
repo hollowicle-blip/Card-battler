@@ -246,8 +246,8 @@ function runBattle(){
       if(card.id==="astarion"&&target.curHp>target.maxHp*0.5){dmg+=4;add(`${tag} 🧛 Укус вампира! +4`,"lp");}
       if(card.id==="laezel"&&card.curHp<target.curHp){dmg+=2;add(`${tag} 🦎 Гитъянки! +2ATK`,"lp");}
       if(card.id==="reynauld"&&card.curHp>target.curHp){dmg+=3;add(`${tag} ⚜️ Крестоносец! +3ATK`,"lp");}
-            // Эстель: бонус союзникам
-      if(card.id!=="estelle"){const est=turn.allies.find(c=>c.id==="estelle"&&c.curHp>0);if(est)dmg+=1;}
+                  // Эстель: бонус союзникам
+      if(card.id!=="estelle"){const team=turn.allies;const est=team.find(c=>c.id==="estelle"&&c.curHp>0);if(est)dmg+=1;}
       add(`${tag} ${card.emoji} ${card.name} → ${target.emoji} ${target.name} (-${dmg})`,"lh");
       const result=applyDamage(target,dmg,add);card.dealtDmgLastRound=true;
       if(result<0){const ret=Math.abs(result);card.curHp-=ret;add(`${tag} ${card.name} получил ${ret} ответного урона!`,"lh");if(card.curHp<=0)add(`💀 ${card.name} повержен ответкой!`,"lk");}

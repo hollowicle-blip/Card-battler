@@ -40,6 +40,31 @@ const ALL_CARDS = [
   {id:"fane",name:"Фейн",emoji:"💀",atk:5,hp:11,rarity:"epic",passiveName:"Исцеление ядом",passiveDesc:"При получении урона: хил +3HP",pack:"rpglegends"},
   {id:"reynauld",name:"Рейнальд",emoji:"⚜️",atk:5,hp:16,rarity:"epic",passiveName:"Крестоносец",passiveDesc:"HP > HP врага: +3ATK",pack:"rpglegends"},
   {id:"dismas",name:"Дисмас",emoji:"🔫",atk:5,hp:10,rarity:"rare",passiveName:"Точный выстрел",passiveDesc:"Первая атака — крит x2",pack:"rpglegends"}
+    // === TRAILS ===
+  {id:"rean",name:"Рин Шварцер",emoji:"⚔️",atk:4,hp:13,rarity:"epic",
+    passiveName:"Стальная воля",passiveDesc:"HP<30%: +4ATK и блок удара (1 раз)",pack:"jrpg"},
+  {id:"lloyd",name:"Ллойд Бэннингс",emoji:"🛡️",atk:3,hp:12,rarity:"rare",
+    passiveName:"Барьер",passiveDesc:"Каждые 3 раунда: союзнику щит 4",pack:"jrpg"},
+  {id:"estelle",name:"Эстель Брайт",emoji:"☀️",atk:4,hp:11,rarity:"rare",
+    passiveName:"Боевой дух",passiveDesc:"Союзники +1ATK пока жива",pack:"jrpg"},
+
+  // === TALES OF BERSERIA ===
+  {id:"velvet",name:"Вайлет Кроу",emoji:"🔥",atk:6,hp:9,rarity:"epic",
+    passiveName:"Пожирательница",passiveDesc:"Убийство: +4HP и +1ATK",pack:"jrpg"},
+  {id:"rokuro",name:"Рокуро Рангецу",emoji:"🗡️",atk:5,hp:10,rarity:"rare",
+    passiveName:"Контрудар",passiveDesc:"При получении урона: 3 урона атакующему",pack:"jrpg"},
+  {id:"magilou",name:"Магилу",emoji:"🔮",atk:3,hp:11,rarity:"rare",
+    passiveName:"Проклятие ведьмы",passiveDesc:"Каждый раунд: ATK врага -1",pack:"jrpg"},
+  {id:"eizen",name:"Айзен",emoji:"🦁",atk:4,hp:14,rarity:"epic",
+    passiveName:"Невезение",passiveDesc:"30% шанс: враг промахивается",pack:"jrpg"},
+
+  // === DANGANRONPA ===
+  {id:"makoto",name:"Макото Наэги",emoji:"🔍",atk:3,hp:10,rarity:"rare",
+    passiveName:"Безумная удача",passiveDesc:"35% уклонение; союзник умер: +3ATK",pack:"danganronpa"},
+  {id:"hajime",name:"Хаджиме Хината",emoji:"📷",atk:4,hp:12,rarity:"epic",
+    passiveName:"Талант",passiveDesc:"Каждые 2 раунда: копирует бонус ATK союзника",pack:"danganronpa"},
+  {id:"kaede",name:"Каэде Акамацу",emoji:"🎹",atk:3,hp:9,rarity:"rare",
+    passiveName:"Гармония",passiveDesc:"Союзники +1HP каждый раунд",pack:"danganronpa"}
 ];
 
 const RARITY_LABEL={common:"Обычная",rare:"Редкая",epic:"Эпическая",legendary:"Легендарная"};
@@ -56,6 +81,10 @@ const PACKS = [
   {id:"roguelike",name:"Пак Рогалик",icon:"🎲",cards:6,price:120,desc:"Загрей, Джокер, Айзек, Скелет, Удачник",filter:"roguelike"},
   {id:"baldursgate",name:"Пак Baldur's Gate",icon:"🐉",cards:6,price:150,desc:"Астарион, Шэдоухарт, Лаэзель, Уилл, Гейл, Карлах",filter:"baldursgate"},
   {id:"rpglegends",name:"Пак RPG Легенды",icon:"⚜️",cards:6,price:150,desc:"И'штола, Пудж, Фейн, Рейнальд, Дисмас",filter:"rpglegends"}
+    ,{id:"jrpg",name:"Пак JRPG",icon:"⛩️",cards:6,price:150,
+    desc:"Рин, Ллойд, Эстель, Вайлет, Рокуро, Магилу, Айзен",filter:"jrpg"},
+  {id:"danganronpa",name:"Пак Данганронпа",icon:"🐻",cards:6,price:150,
+    desc:"Макото, Хаджиме, Каэде",filter:"danganronpa"}
 ];
 
 let gameState = loadState();
@@ -169,7 +198,7 @@ function startBattleScreen(){
   document.getElementById("battle-log").innerHTML="";renderBattle();
 }
 function generateBotDefense(){const pool=[...ALL_CARDS];const t=[];for(let i=0;i<3;i++){t.push(makeCard(pool[Math.floor(Math.random()*pool.length)].id));}return t;}
-function makeCard(id){const b=ALL_CARDS.find(c=>c.id===id);return{...b,curHp:b.hp,maxHp:b.hp,curAtk:b.atk,mushroomUsed:false,shieldRemaining:3,dealtDmgLastRound:false,dodgeUsed:false,firstAttack:true,revived:false,wyllUsed:false,yshtolaUsed:false,karlachDmgTaken:0,shadowheartUsed:false,side:""};}
+function makeCard(id){const b=ALL_CARDS.find(c=>c.id===id);return{...b,curHp:b.hp,maxHp:b.hp,curAtk:b.atk,mushroomUsed:false,shieldRemaining:3,dealtDmgLastRound:false,dodgeUsed:false,firstAttack:true,revived:false,wyllUsed:false,yshtolaUsed:false,karlachDmgTaken:0,shadowheartUsed:false,reanUsed:false,lloydShield:0,side:""};}
 function renderBattle(){renderBTeam("b-team-a",battleTeamA);renderBTeam("b-team-d",battleTeamD);}
 function renderBTeam(eid,team){document.getElementById(eid).innerHTML=team.map(c=>`<div class="card-b ${c.curHp<=0?'dead':''}"><div class="emo">${c.emoji}</div><div class="cname">${c.name}</div><div class="b-stats"><span class="atk-v">⚔${c.curAtk}</span><span class="hp-v">❤${Math.max(0,c.curHp)}/${c.maxHp}</span></div>${c.id==='chief'&&c.shieldRemaining>0?`<div class="shield-v">🛡${c.shieldRemaining}</div>`:''}<div class="b-passive">✨${c.passiveName}</div></div>`).join("");}
 
@@ -197,6 +226,15 @@ function runBattle(){
       if(card.id==="isaac"){const roll=Math.floor(Math.random()*3);if(roll===0){card.curAtk+=2;add(`${tag} 🗝️ +2ATK`,"lp");}else if(roll===1){card.curHp+=2;card.maxHp+=2;add(`${tag} 🗝️ +2HP`,"lp");}else{target.curHp-=3;add(`${tag} 🗝️ 3 урона ${target.name}`,"lp");}}
       if(card.id==="zelda"&&round%3===0){const ally=turn.allies.filter(c=>c.curHp>0&&c!==card).sort((a,b)=>a.curHp-b.curHp)[0];if(ally){ally.curHp=Math.min(ally.maxHp,ally.curHp+3);add(`${tag} 👑 Зельда: ${ally.name} +3HP`,"lp");}}
       if(card.id==="shadowheart"&&round===1&&!card.shadowheartUsed){card.shadowheartUsed=true;const ally=turn.allies.filter(c=>c.curHp>0).sort((a,b)=>a.curHp-b.curHp)[0];if(ally){ally.curHp=Math.min(ally.maxHp,ally.curHp+3);add(`${tag} 🌙 Шэдоухарт: ${ally.name} +3HP`,"lp");}}
+            // Ллойд: барьер каждые 3 раунда
+      if(card.id==="lloyd"&&round%3===0){const ally=turn.allies.filter(c=>c.curHp>0&&c!==card).sort((a,b)=>a.curHp-b.curHp)[0];if(ally){ally.lloydShield=(ally.lloydShield||0)+4;add(`${tag} 🛡️ Ллойд: Барьер! ${ally.name} +4 щита`,"lp");}}
+      // Магилу: снижение ATK врага
+      if(card.id==="magilou"){const en=turn.enemies.find(c=>c.curHp>0);if(en&&en.curAtk>1){en.curAtk-=1;add(`${tag} 🔮 Магилу: ${en.name} ATK→${en.curAtk}`,"lp");}}
+      // Каэде: хил союзникам
+      if(card.id==="kaede"){turn.allies.filter(c=>c.curHp>0&&c!==card).forEach(a=>{a.curHp=Math.min(a.maxHp,a.curHp+1);});add(`${tag} 🎹 Каэде: Гармония! Союзники +1HP`,"lp");}
+      // Эстель: бонус ATK союзникам (проверяется при ударе)
+      // Хаджиме: копирование бонуса ATK
+      if(card.id==="hajime"&&round%2===0){const best=turn.allies.filter(c=>c.curHp>0&&c!==card).sort((a,b)=>b.curAtk-a.curAtk)[0];if(best&&best.curAtk>best.atk){const bonus=best.curAtk-best.atk;card.curAtk=card.atk+bonus;add(`${tag} 📷 Хаджиме: Талант! ATK→${card.curAtk}`,"lp");}}
       if(card.id==="dovahkiin"&&round%2===0){turn.enemies.filter(c=>c.curHp>0).forEach(e=>{e.curHp-=3;if(e.curHp<=0)add(`💀 ${e.name} повержен Криком!`,"lk");});add(`${tag} 🧙 Довакин: Крик!`,"lp");renderBattle();if(checkEnd(add,loop,btn))return;}
       if(card.id==="doom"&&target.curHp<=3&&target.curHp>0){target.curHp=0;add(`${tag} ${card.emoji} ${card.name} → 💀 ${target.name} ДОБИВАНИЕ!`,"lk");card.dealtDmgLastRound=true;onKill(card,target,turn.allies,turn.enemies,add);renderBattle();if(checkEnd(add,loop,btn))return;continue;}
       let dmg=card.curAtk;
@@ -208,6 +246,8 @@ function runBattle(){
       if(card.id==="astarion"&&target.curHp>target.maxHp*0.5){dmg+=4;add(`${tag} 🧛 Укус вампира! +4`,"lp");}
       if(card.id==="laezel"&&card.curHp<target.curHp){dmg+=2;add(`${tag} 🦎 Гитъянки! +2ATK`,"lp");}
       if(card.id==="reynauld"&&card.curHp>target.curHp){dmg+=3;add(`${tag} ⚜️ Крестоносец! +3ATK`,"lp");}
+            // Эстель: бонус союзникам
+      if(card.id!=="estelle"){const est=turn.allies.find(c=>c.id==="estelle"&&c.curHp>0);if(est)dmg+=1;}
       add(`${tag} ${card.emoji} ${card.name} → ${target.emoji} ${target.name} (-${dmg})`,"lh");
       const result=applyDamage(target,dmg,add);card.dealtDmgLastRound=true;
       if(result<0){const ret=Math.abs(result);card.curHp-=ret;add(`${tag} ${card.name} получил ${ret} ответного урона!`,"lh");if(card.curHp<=0)add(`💀 ${card.name} повержен ответкой!`,"lk");}
@@ -224,14 +264,19 @@ function runBattle(){
 function applyDamage(target,dmg,add){
   if(target.id==="chief"&&target.shieldRemaining>0){const bl=Math.min(dmg,target.shieldRemaining);target.shieldRemaining-=bl;dmg-=bl;if(bl>0)add(`🛡 ${target.name}: щит -${bl}`,"ls");if(dmg<=0)return 0;}
   if(target.id==="fox"&&!target.dodgeUsed){target.dodgeUsed=true;add(`🦊 ${target.name}: Уклонение!`,"lp");return 0;}
-  if(target.id==="lucky"&&Math.random()<0.25){add(`🎲 ${target.name}: Удача! Блок`,"lp");return 0;}
+  if(target.id==="lucky"&&Math.random()<0.25){add(`🎲 ${target.name}: Удача!`,"lp");return 0;}
   if(target.id==="frogger"&&Math.random()<0.4){add(`🐸 ${target.name}: Прыжок!`,"lp");return 0;}
+  if(target.id==="eizen"&&Math.random()<0.3){add(`🦁 ${target.name}: Невезение! Промах`,"lp");return 0;}
+  if(target.id==="makoto"&&Math.random()<0.35){add(`🔍 ${target.name}: Безумная удача!`,"lp");return 0;}
+  if(target.id==="rean"&&!target.reanUsed&&target.curHp>0&&target.curHp<=target.maxHp*0.3){target.reanUsed=true;target.curAtk+=4;add(`⚔️ ${target.name}: Стальная воля! +4ATK и блок`,"lp");return 0;}
+  if(target.lloydShield>0){const bl=Math.min(dmg,target.lloydShield);target.lloydShield-=bl;dmg-=bl;if(bl>0)add(`🛡️ Барьер: ${target.name} -${bl} урона`,"ls");if(dmg<=0)return 0;}
   if(target.id!=="price"){const team=target.side==="a"?battleTeamA:battleTeamD;const p=team.find(c=>c.id==="price"&&c.curHp>0);if(p&&dmg>1){dmg-=1;add(`🛡️ Прайс: -1 урона`,"lp");}}
   target.curHp-=dmg;
-  if(target.id==="wyll"&&target.curHp<=0&&!target.wyllUsed){target.wyllUsed=true;target.curHp=1;add(`👁️ ${target.name}: Клинок на границе! 1HP`,"lp");return -4;}
+  if(target.id==="wyll"&&target.curHp<=0&&!target.wyllUsed){target.wyllUsed=true;target.curHp=1;add(`👁️ ${target.name}: Клинок на границе!`,"lp");return -4;}
   if(target.id==="kratos"&&dmg>0&&target.curHp>0){target.curAtk+=1;add(`🪓 ${target.name}: Ярость! ATK→${target.curAtk}`,"lp");}
   if(target.id==="sekiro"&&dmg>0&&target.curHp>0){add(`⚔️ ${target.name}: Парирование!`,"lp");return -2;}
-  if(target.id==="mario"&&!target.mushroomUsed&&target.curHp>0&&target.curHp<5){target.mushroomUsed=true;target.curHp+=4;target.curAtk+=1;add(`🍄 ${target.name}: Гриб! +4HP +1ATK`,"lp");}
+  if(target.id==="rokuro"&&dmg>0&&target.curHp>0){add(`🗡️ ${target.name}: Контрудар!`,"lp");return -3;}
+  if(target.id==="mario"&&!target.mushroomUsed&&target.curHp>0&&target.curHp<5){target.mushroomUsed=true;target.curHp+=4;target.curAtk+=1;add(`🍄 ${target.name}: Гриб!`,"lp");}
   if(target.id==="yshtola"&&!target.yshtolaUsed&&target.curHp>0&&target.curHp<target.maxHp*0.5){target.yshtolaUsed=true;target.curAtk+=3;target.curHp+=2;add(`🐱 ${target.name}: Ночь! +3ATK +2HP`,"lp");}
   if(target.id==="karlach"&&dmg>0&&target.curHp>0){target.karlachDmgTaken+=dmg;const b=Math.floor(target.karlachDmgTaken/5);const n=target.atk+b;if(n>target.curAtk){target.curAtk=n;add(`🔥 ${target.name}: Мотор! ATK→${target.curAtk}`,"lp");}}
   if(target.id==="fane"&&dmg>0&&target.curHp>0){target.curHp=Math.min(target.maxHp,target.curHp+3);add(`💀 ${target.name}: Исцеление ядом! +3HP`,"lp");}
@@ -242,10 +287,14 @@ function onKill(killer,victim,allies,enemies,add){
   if(killer.id==="lara"){const nx=allies.find(c=>c.curHp>0&&c!==killer);if(nx){nx.maxHp+=2;nx.curHp+=2;add(`🔫 Сокровища! ${nx.name} +2HP`,"lp");}}
   if(killer.id==="megaman"){killer.curAtk=victim.curAtk;add(`🔵 Мегамен: ATK→${killer.curAtk}`,"lp");}
   if(killer.id==="pudge"){killer.curAtk+=1;killer.curHp+=2;killer.maxHp+=2;add(`🪝 Пудж: +1ATK +2HP`,"lp");}
+  if(killer.id==="velvet"){killer.curHp=Math.min(killer.maxHp,killer.curHp+4);killer.curAtk+=1;add(`🔥 Вайлет: +4HP +1ATK`,"lp");}
   if(victim.id==="zagreus"&&!victim.revived){victim.revived=true;victim.curHp=3;add(`🏴‍☠️ Загрей: Возрождён!`,"lp");}
   if(victim.id==="skeleton"){killer.curAtk=Math.max(0,killer.curAtk-2);add(`☠️ Скелет: ${killer.name} -2ATK`,"lp");}
   if(victim.id==="rico"){const foes=victim.side==="a"?battleTeamD:battleTeamA;foes.filter(c=>c.curHp>0).forEach(e=>{e.curHp-=4;if(e.curHp<=0)add(`💀 ${e.name} погиб от взрыва!`,"lk");});add(`🌍 Рико: Взрыв!`,"lp");}
-  if(victim.id==="gale"){killer.curHp-=7;add(`💫 Гейл: Сфера! 7 урона ${killer.name}`,"lp");if(killer.curHp<=0)add(`💀 ${killer.name} погиб от взрыва Гейла!`,"lk");}
+  if(victim.id==="gale"){killer.curHp-=7;add(`💫 Гейл: 7 урона ${killer.name}`,"lp");if(killer.curHp<=0)add(`💀 ${killer.name} погиб от Гейла!`,"lk");}
+  // Макото: союзник умер — +3ATK
+  const makoto=allies.find(c=>c.id==="makoto"&&c.curHp>0);
+  if(makoto&&allies.includes(victim)){makoto.curAtk+=3;add(`🔍 Макото: Безумная удача! +3ATK`,"lp");}
 }
 
 function checkEnd(add,loop,btn){

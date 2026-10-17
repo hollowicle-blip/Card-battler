@@ -151,6 +151,11 @@ function openPack(pack){
 function showScreen(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+  if(id==="screen-menu")renderMenu();
+  else if(id==="screen-shop")renderShop();
+  else if(id==="screen-collection")renderCollection();
+  else if(id==="screen-defense")renderDefense();
+  else if(id==="screen-battle-pick")renderBattlePick();
 }
 
 function renderMenu(){
